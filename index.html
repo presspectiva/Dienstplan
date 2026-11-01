@@ -1,17 +1,17 @@
-<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dienstplan • Tabel v2</title><style>
+<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dienstplan • Tabel v4 – Echilibru</title><style>
 :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17243c;background:#f2f5fa}*{box-sizing:border-box}body{margin:0}header{background:#172b50;color:white;padding:20px 4vw}header h1{margin:0;font-size:24px}header p{margin:5px 0;color:#c9d8ee}main{padding:15px;max-width:1600px;margin:auto}.bar,.panel{background:white;border:1px solid #dbe3ef;border-radius:14px;padding:14px;margin:12px 0}.bar{display:flex;align-items:end;flex-wrap:wrap;gap:10px}label{font-size:12px;color:#475569;display:grid;gap:4px}input,select{font:inherit;padding:8px;border:1px solid #cbd5e1;border-radius:8px;min-width:0}button{font:inherit;font-weight:650;background:#2459bf;color:white;border:0;border-radius:9px;padding:10px 14px;cursor:pointer}button.secondary{background:#e7eef9;color:#1e3d70}button.green{background:#13824d}button:disabled{opacity:.5}.scroll{overflow:auto;max-height:68vh;border:1px solid #dce3ef;border-radius:10px}table{border-collapse:separate;border-spacing:0;white-space:nowrap;font-size:12px}th,td{border-right:1px solid #dfe6ef;border-bottom:1px solid #dfe6ef;text-align:center;min-width:39px;height:35px;padding:4px}thead th{position:sticky;top:0;z-index:3;background:#eaf0f9}th:first-child,td:first-child{position:sticky;left:0;z-index:2;background:white;min-width:160px;text-align:left}thead th:first-child{z-index:5;background:#eaf0f9}th:nth-child(2),td:nth-child(2){position:sticky;left:160px;z-index:2;background:white;min-width:83px}thead th:nth-child(2){z-index:5;background:#eaf0f9}th:nth-child(3),td:nth-child(3){position:sticky;left:243px;z-index:2;background:white;min-width:72px}thead th:nth-child(3){z-index:5;background:#eaf0f9}.weekend{background:#fff1cf!important}.td{background:#dcfce7}.nd{background:#dce5ff}.u{background:#fee2e2}.off{background:#f1f5f9}.fixed{box-shadow:inset 0 0 0 2px #334155}.uncovered{background:#fff0e8;color:#a2351c;font-weight:700}.name{width:148px;font-size:12px}.hours{width:70px;font-size:12px}.small{font-size:12px;color:#64748b}.good{color:#067344}.bad{color:#b42318}.stat{display:inline-block;margin:5px 10px 5px 0;padding:7px 11px;border-radius:9px;background:#eff4fa}.legend{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}.tag{padding:4px 9px;border-radius:6px;font-size:12px}td select{font-size:11px;width:58px;padding:3px 0;border:0;background:transparent}#message{white-space:pre-wrap}.sub{font-size:12px;color:#5e6e83}#file{display:none}@media print{header,.bar,.noPrint{display:none!important}main{padding:0}.panel{border:0;padding:0}.scroll{max-height:none;overflow:visible}th,td{min-width:23px;padding:2px;font-size:9px}th:first-child,td:first-child{min-width:100px}th:nth-child(2),td:nth-child(2){min-width:45px;left:100px}th:nth-child(3),td:nth-child(3){min-width:45px;left:145px}}
 
-.edit{background:#fff7dc!important}.edited{box-shadow:inset 0 0 0 2px #a16207}.alert{color:#a22}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}td select{width:64px} .stats-table td,.stats-table th{position:static;min-width:85px;text-align:left;padding:7px} .stats-table{white-space:normal}</style></head><body><header><h1>Dienstplan · Tabel inteligent 2.0</h1><p>12 ore/tură · U = 8 ore · maximum 15 ture · editare manuală fără ștergerea planului</p></header><main>
+.edit{background:#fff7dc!important}.edited{box-shadow:inset 0 0 0 2px #a16207}.alert{color:#a22}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}td select{width:64px} .stats-table td,.stats-table th{position:static;min-width:85px;text-align:left;padding:7px} .stats-table{white-space:normal}</style></head><body><header><h1>Dienstplan · Tabel inteligent 4.0 · Echilibru</h1><p>12 ore/tură · U = 8 ore · maximum 15 ture · editare manuală fără ștergerea planului</p></header><main>
 <div class="bar"><label>Luna<select id="month"></select></label><label>An<input type="number" id="year" value="2026" style="width:90px"></label><button class="secondary" id="changeMonth">Schimbă luna</button><button class="secondary" id="add">+ Angajat</button><button class="secondary" id="example">Exemplu iulie</button><button class="green" id="generate">Generează</button></div>
 <div class="panel"><strong>Plan lunar — poți modifica manual și după generare</strong><p class="sub">Introdu numele și norma lunară (implicit 173 h). U scade 8 h din normă. Atinge orice celulă și alege TD, ND, U sau L. Modificarea nu șterge celelalte ture.</p><div class="legend"><span class="tag td">TD = 12 h</span><span class="tag nd">ND = 12 h</span><span class="tag u">U = 8 h concediu</span><span class="tag off">L = liber obligatoriu</span><span class="tag uncovered">! = neacoperit</span></div><div class="scroll" id="table"></div></div>
 <div class="bar noPrint"><button id="save">Salvează proiect JSON</button><button class="secondary" id="load">Deschide proiect JSON</button><input type="file" id="file" accept=".json,application/json"><button class="secondary" id="csv">Export CSV</button><button class="secondary" id="print">Tipărește / PDF</button><button class="secondary" id="clear">Șterge doar planul generat</button></div>
 <div class="panel"><strong>Ore și verificare</strong><div id="stats"></div><p id="message" class="small">Introdu datele și apasă Generează.</p></div>
-<div class="panel"><strong>Reguli</strong><p class="small">Maximum 15 ture de câte 12 ore pe persoană; U = 8 ore scăzute din norma de 173 h. Maximum 4 zile consecutive; după ultima ND din bloc, 2 zile libere; maximum 2 weekenduri complete; blocuri TD, ND, TD–TD–ND, TD–ND–ND, TD–TD–ND–ND. Turele neacoperite rămân marcate. Planificarea este euristică, nu garantează acoperirea maximă. Verifică zilele de la granița lunilor.</p></div>
+<div class="panel"><strong>Reguli</strong><p class="small">Maximum 15 ture de câte 12 ore pe persoană; U = 8 ore scăzute din norma de 173 h. Maximum 4 zile consecutive; după ultima ND din bloc, 2 zile libere; maximum 2 weekenduri complete, cu același tip de tură sâmbătă și duminică (TD–TD sau ND–ND); blocuri TD, ND, TD–TD–ND, TD–ND–ND, TD–TD–ND–ND. Turele neacoperite rămân marcate. Generatorul caută o distribuție echitabilă și penalizează depășirea normei; este euristic și nu garantează optimul matematic. Verifică zilele de la granița lunilor.</p></div>
 </main><script>const $=id=>document.getElementById(id);
 const months=['Ian','Feb','Mar','Apr','Mai','Iun','Iul','Aug','Sep','Oct','Noi','Dec'],week=['Du','Lu','Ma','Mi','Jo','Vi','Sâ'];
 let m={year:2026,month:11,people:Array.from({length:6},(_,i)=>({id:i+1,name:'Angajat '+(i+1),base:173,locks:{}})),plan:null,manual:{}};
 const SHIFT=12,UH=8,MAX=15;
-const patterns=[['TD'],['ND'],['TD','TD','ND'],['TD','ND','ND'],['TD','TD','ND','ND']];
+const patterns=[['TD'],['ND'],['TD','TD','ND'],['TD','ND','ND'],['TD','TD','ND','ND'],['TD','TD'],['ND','ND']];
 function nDays(){return new Date(m.year,m.month,0).getDate()}
 function dow(d){return new Date(m.year,m.month-1,d).getDay()}
 function weekend(d){return dow(d)===0||dow(d)===6}
@@ -32,24 +32,103 @@ $('table').querySelectorAll('select').forEach(el=>el.onchange=()=>{let i=+el.dat
 }
 function validate(plan){if(!plan)return[];let errors=[],n=nDays();for(let d=1;d<=n;d++)for(let s of ['TD','ND'])if(plan.filter(a=>a[d]===s).length>1)errors.push(`Ziua ${d}: două persoane pe ${s}`);
 m.people.forEach((p,i)=>{let a=plan[i]||{},total=Object.values(a).filter(v=>v==='TD'||v==='ND').length;if(total>MAX)errors.push(`${p.name}: ${total} ture, maxim ${MAX}`);let weekends=new Set(),run=[],runStart=0;
-function close(){if(!run.length)return;let str=run.join(','),allow=patterns.some(x=>x.join(',')===str)||(runStart===1&&str==='ND,ND');if(!allow)errors.push(`${p.name}: bloc nepermis ${run.join(' ')} (ziua ${runStart})`);run=[]}
-for(let d=1;d<=n;d++){let v=a[d]||'',lk=p.locks[d]||'';if((lk==='U'||lk==='L')&&v)errors.push(`${p.name}: tură în zi indisponibilă ${d}`);if(v){if(!run.length)runStart=d;run.push(v);if(run.length>4)errors.push(`${p.name}: peste 4 zile consecutive`);let w=wkey(d);if(w!==null)weekends.add(w)}else close();if(v==='ND'&&a[d+1]!=='ND'){for(let k=d+1;k<=Math.min(n,d+2);k++)if(a[k])errors.push(`${p.name}: după ND ${d} lipsesc 2 zile libere`)}if(dow(d)===6&&d<n&&Boolean(a[d])!==Boolean(a[d+1]))errors.push(`${p.name}: weekend despărțit ${d}-${d+1}`)}close();if(weekends.size>2)errors.push(`${p.name}: ${weekends.size} weekenduri (maxim 2)`)});return [...new Set(errors)]}
+function close(){if(!run.length)return;let str=run.join(','),allow=patterns.some(x=>x.join(',')===str)&&(!['TD,TD','ND,ND'].includes(str)||(dow(runStart)===6&&runStart+1<=nDays())||(runStart===1&&str==='ND,ND'));if(!allow)errors.push(`${p.name}: bloc nepermis ${run.join(' ')} (ziua ${runStart})`);run=[]}
+for(let d=1;d<=n;d++){let v=a[d]||'',lk=p.locks[d]||'';if((lk==='U'||lk==='L')&&v)errors.push(`${p.name}: tură în zi indisponibilă ${d}`);if(v){if(!run.length)runStart=d;run.push(v);if(run.length>4)errors.push(`${p.name}: peste 4 zile consecutive`);let w=wkey(d);if(w!==null)weekends.add(w)}else close();if(v==='ND'&&a[d+1]!=='ND'){for(let k=d+1;k<=Math.min(n,d+2);k++)if(a[k])errors.push(`${p.name}: după ND ${d} lipsesc 2 zile libere`)}if(dow(d)===6&&d<n){if(Boolean(a[d])!==Boolean(a[d+1]))errors.push(`${p.name}: weekend despărțit ${d}-${d+1}`);else if(a[d]&&a[d+1]&&a[d]!==a[d+1])errors.push(`${p.name}: weekend cu ture diferite ${d}-${d+1} (${a[d]} / ${a[d+1]})`)}}close();if(weekends.size>2)errors.push(`${p.name}: ${weekends.size} weekenduri (maxim 2)`)});return [...new Set(errors)]}
 function summarize(){if(!m.plan){$('stats').innerHTML='';return}let h='<div class="scroll"><table class="stats-table"><thead><tr><th>Angajat</th><th>Normă</th><th>U</th><th>De lucrat</th><th>TD+ND</th><th>Ore lucrate</th><th>Diferență</th></tr></thead><tbody>';
-m.people.forEach((p,i)=>{let u=Object.values(p.locks).filter(v=>v==='U').length,worked=count(i)*SHIFT,required=hours(p);h+=`<tr><td>${esc(p.name)}</td><td>${p.base} h</td><td>${u} × 8 = ${u*UH} h</td><td>${required} h</td><td>${count(i)} / 15</td><td>${worked} h</td><td>${required-worked} h</td></tr>`});h+='</tbody></table></div>';$('stats').innerHTML=h}
-function candidate(){let n=nDays(),a=m.people.map(()=>({})),occ=Array.from({length:n+1},()=>({TD:false,ND:false})),fixed=m.people.map((p,i)=>({i,f:Object.keys(p.locks).filter(d=>['TD','ND'].includes(p.locks[d])).length})).sort((x,y)=>y.f-x.f||Math.random()-.5);
-for(let {i} of fixed){let p=m.people[i],limit=Math.min(MAX,Math.max(0,Math.ceil(hours(p)/SHIFT))),locks=p.locks,dp=Array.from({length:n+4},()=>[]);dp[1]=[{seq:{},cnt:0,score:0,wks:[]}];for(let d=1;d<=n;d++){let states=dp[d].sort((x,y)=>y.score-x.score).slice(0,65);for(let st of states){if(!['TD','ND'].includes(locks[d]))dp[d+1].push(st);
-for(let b of patterns.concat(d===1?[['ND','ND']]:[])){let end=d+b.length-1;if(end>n||st.cnt+b.length>limit)continue;let ok=true,wks=new Set(st.wks);for(let j=0;j<b.length;j++){let day=d+j,s=b[j],lk=locks[day]||'';if(lk==='U'||lk==='L'||(lk==='TD'||lk==='ND')&&lk!==s||occ[day][s]){ok=false;break}let w=wkey(day);if(w!==null)wks.add(w)}if(!ok||wks.size>2)continue;
-for(let day=d;day<=end;day++){if(dow(day)===6&&day<n&&!(day+1>=d&&day+1<=end))ok=false;if(dow(day)===0&&day>1&&!(day-1>=d&&day-1<=end))ok=false}if(!ok)continue;
-let after=end+(b.at(-1)==='ND'?3:2);for(let day=end+1;day<Math.min(after,n+1);day++)if(['TD','ND'].includes(locks[day]))ok=false;if(!ok)continue;
-let seq={...st.seq};b.forEach((s,j)=>seq[d+j]=s);let score=st.score+100*b.length+(Math.random()-.5)*90;dp[Math.min(n+1,after)].push({seq,cnt:st.cnt+b.length,score,wks:[...wks]})}}}
-let finals=dp[n+1].filter(st=>Object.entries(locks).every(([d,v])=>!['TD','ND'].includes(v)||st.seq[+d]===v));finals.sort((x,y)=>y.score-x.score);if(!finals.length)return null;let pick=finals[Math.floor(Math.random()*Math.min(4,finals.length))];a[i]=pick.seq;for(let [d,s] of Object.entries(pick.seq))occ[+d][s]=true}
-if(validate(a).length)return null;let covered=0,difference=0;for(let d=1;d<=n;d++)for(let s of ['TD','ND'])if(occ[d][s])covered++;m.people.forEach((p,i)=>difference+=Math.abs(hours(p)-Object.keys(a[i]).length*SHIFT));return {a,score:covered*10000-difference,covered}}
-function generate(){let fixed=[];for(let d=1;d<=nDays();d++)for(let s of ['TD','ND'])if(m.people.filter(p=>p.locks[d]===s).length>1)fixed.push(`${s} ziua ${d}: ture fixe contradictorii`);if(fixed.length){setMsg(fixed.join('\n'));return}
-let best=null,start=performance.now();for(let k=0;k<120;k++){let c=candidate();if(c&&(!best||c.score>best.score))best=c;if(performance.now()-start>4500)break}
-if(!best){setMsg('Nu am găsit un plan valid cu aceste condiții. Planul existent a rămas neschimbat.');return}m.plan=best.a;m.manual={};render();summarize();setMsg(`Plan generat: ${best.covered}/${2*nDays()} ture acoperite, ${2*nDays()-best.covered} neacoperite. Maximum 15 ture/persoană. Poți modifica manual celulele fără să se șteargă planul. Verifică și zilele de la granița lunilor.`,true)}
+m.people.forEach((p,i)=>{let u=Object.values(p.locks).filter(v=>v==='U').length,worked=count(i)*SHIFT,required=hours(p);h+=`<tr><td>${esc(p.name)}</td><td>${p.base} h</td><td>${u} × 8 = ${u*UH} h</td><td>${required} h</td><td>${count(i)} / 15</td><td>${worked} h</td><td style="color:${Math.abs(required-worked)>24?'#b42318':'#067344'}">${worked-required>0?'+':''}${worked-required} h</td></tr>`});h+='</tbody></table></div>';$('stats').innerHTML=h}
+function candidate(){
+ const n=nDays(),a=m.people.map(()=>({})),occ=Array.from({length:n+1},()=>({TD:false,ND:false}));
+ // Randomized ordering: first the people with low availability / mandatory shifts,
+ // then rotate the rest so no employee permanently gets first pick.
+ const order=m.people.map((p,i)=>({i,required:Object.values(p.locks).filter(v=>v==='TD'||v==='ND').length,
+   available:n-Object.values(p.locks).filter(v=>v==='U'||v==='L').length,
+   random:Math.random()}));
+ order.sort((x,y)=>y.required-x.required || (x.available-y.available)*0.035 || x.random-y.random);
+ for(const {i} of order){
+  const p=m.people[i],locks=p.locks,target=hours(p)/SHIFT;
+  const max=Math.min(MAX,Math.max(0,Math.ceil(target)));
+  const dp=Array.from({length:n+5},()=>[]);
+  dp[1]=[{seq:{},cnt:0,score:0,wks:[]}];
+  for(let d=1;d<=n;d++){
+   const states=dp[d].sort((x,y)=>y.score-x.score).slice(0,105);
+   for(const st of states){
+    if(!['TD','ND'].includes(locks[d]))dp[d+1].push(st);
+    for(const b of patterns){
+     const end=d+b.length-1;if(end>n||st.cnt+b.length>max)continue;
+     // TD-TD and ND-ND only allowed as the complete weekend pair,
+     // except ND-ND at the beginning of a month (continuation unknown).
+     if(b.length===2&&b[0]===b[1]&&!(dow(d)===6&&d+1<=n)&&!(d===1&&b[0]==='ND'))continue;
+     let ok=true,wks=new Set(st.wks);
+     for(let j=0;j<b.length;j++){
+      const day=d+j,s=b[j],lk=locks[day]||'';
+      if(lk==='U'||lk==='L'||(lk==='TD'||lk==='ND')&&lk!==s||occ[day][s]){ok=false;break}
+      let w=wkey(day);if(w!==null)wks.add(w);
+     }
+     if(!ok||wks.size>2)continue;
+     for(let day=d;day<=end;day++){
+      if(dow(day)===6&&day<n){if(!(day+1>=d&&day+1<=end)||b[day-d]!==b[day+1-d])ok=false}
+      if(dow(day)===0&&day>1){if(!(day-1>=d&&day-1<=end)||b[day-d]!==b[day-1-d])ok=false}
+     }
+     if(!ok)continue;
+     const after=end+(b.at(-1)==='ND'?3:2);
+     for(let day=end+1;day<Math.min(after,n+1);day++)if(['TD','ND'].includes(locks[day]))ok=false;
+     if(!ok)continue;
+     let seq={...st.seq};b.forEach((shift,j)=>seq[d+j]=shift);
+     // The final evaluation strongly prioritizes balance; in the DP we keep
+     // a broad beam of alternative counts and positions.
+     let projected=st.cnt+b.length;
+     let score=st.score+125*b.length-35*Math.max(0,projected-Math.floor(target))
+       +Math.random()*35;
+     dp[Math.min(n+1,after)].push({seq,cnt:projected,score,wks:[...wks]});
+    }
+   }
+  }
+  const finals=dp[n+1].filter(st=>Object.entries(locks).every(([d,v])=>!['TD','ND'].includes(v)||st.seq[+d]===v));
+  if(!finals.length)return null;
+  // Prefer target, not maximum possible shifts. Allow 180h for 173h
+  // only if there is no better global allocation.
+  finals.sort((x,y)=>{
+   const ax=Math.abs(x.cnt*SHIFT-hours(p)),ay=Math.abs(y.cnt*SHIFT-hours(p));
+   return ax-ay || y.score-x.score;
+  });
+  const pick=finals[Math.floor(Math.random()*Math.min(5,finals.length))];
+  a[i]=pick.seq;for(const [d,shift] of Object.entries(pick.seq))occ[+d][shift]=true;
+ }
+ if(validate(a).length)return null;
+ let covered=0,deficits=[],over=0;
+ for(let d=1;d<=n;d++)for(const shift of ['TD','ND'])if(occ[d][shift])covered++;
+ m.people.forEach((p,i)=>{
+  const target=hours(p),worked=Object.keys(a[i]).length*SHIFT;
+  deficits.push(Math.max(0,target-worked)/Math.max(12,target));
+  over+=Math.max(0,worked-target);
+ });
+ // First keep as many shifts covered as possible, but a very uneven plan
+ // is more costly than a modest number of uncovered slots.
+ const avg=deficits.reduce((a,b)=>a+b,0)/Math.max(1,deficits.length);
+ const worst=Math.max(0,...deficits);
+ const imbalance=deficits.reduce((a,b)=>a+(b-avg)**2,0);
+ const score=covered*300 - worst*2700 - imbalance*1900 - over*15;
+ return {a,score,covered,worst,imbalance,over};
+}
+function generate(){
+ let fixed=[];for(let d=1;d<=nDays();d++)for(let shift of ['TD','ND'])
+  if(m.people.filter(p=>p.locks[d]===shift).length>1)fixed.push(`${shift} ziua ${d}: ture fixe contradictorii`);
+ if(fixed.length){setMsg(fixed.join('\n'));return}
+ const old=m.plan,oldManual=m.manual;
+ let best=null,start=performance.now(),tries=0;
+ for(let k=0;k<240;k++){
+  const c=candidate();tries++;
+  if(c&&(!best||c.score>best.score))best=c;
+  if(performance.now()-start>6500)break;
+ }
+ if(!best){m.plan=old;m.manual=oldManual;setMsg('Nu am găsit o variantă validă. Planul existent a fost păstrat. Verifică restricțiile și încearcă din nou.');return}
+ m.plan=best.a;m.manual={};render();summarize();
+ const dif=m.people.map((p,i)=>`${p.name}: ${Object.keys(m.plan[i]).length*12 + (p.base-hours(p)) - p.base} h`).join(' | ');
+ setMsg(`Plan cu distribuție echilibrată: ${best.covered}/${2*nDays()} ture acoperite; ${2*nDays()-best.covered} neacoperite. Încercări: ${tries}. Diferențe față de normă (inclusiv U): ${dif}. Depășirile sunt penalizate și se folosesc numai când îmbunătățesc soluția găsită. Rezultat euristic, nu optim matematic garantat. Verifică trecerea dintre luni.`,true);
+}
 function dl(text,name,type){let b=new Blob([text],{type}),url=URL.createObjectURL(b),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 $('generate').onclick=generate;$('add').onclick=()=>{let id=Math.max(0,...m.people.map(p=>p.id))+1;m.people.push({id,name:'Angajat '+id,base:173,locks:{}});if(m.plan)m.plan.push({});render();summarize()};
-$('changeMonth').onclick=()=>{m.year=+$('year').value;m.month=+$('month').value;m.plan=null;m.manual={};render();summarize()};
+$('month').onchange=()=>{m.year=+$('year').value;m.month=+$('month').value;m.plan=null;m.manual={};render();summarize()};$('changeMonth').onclick=()=>{m.year=+$('year').value;m.month=+$('month').value;m.plan=null;m.manual={};render();summarize()};
 $('clear').onclick=()=>{m.plan=null;m.manual={};render();summarize();setMsg('Turele generate au fost șterse.')};
 $('save').onclick=()=>dl(JSON.stringify(m,null,2),`dienstplan_${m.year}_${m.month}.json`,'application/json');$('load').onclick=()=>$('file').click();
 $('file').onchange=async e=>{try{let obj=JSON.parse(await e.target.files[0].text());if(!Array.isArray(obj.people)||!obj.year||!obj.month)throw Error('format invalid');m=obj;m.manual??={};m.people.forEach(p=>{p.base??=173;p.locks??={}});sync();render();summarize();setMsg('Proiect încărcat.',true)}catch(err){alert('Eroare: '+err.message)}};
