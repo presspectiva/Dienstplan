@@ -1,7 +1,7 @@
 <!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dienstplan • Tabel v4.2 – Program special</title><style>
 :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17243c;background:#f2f5fa}*{box-sizing:border-box}body{margin:0}header{background:#172b50;color:white;padding:20px 4vw}header h1{margin:0;font-size:24px}header p{margin:5px 0;color:#c9d8ee}main{padding:15px;max-width:1600px;margin:auto}.bar,.panel{background:white;border:1px solid #dbe3ef;border-radius:14px;padding:14px;margin:12px 0}.bar{display:flex;align-items:end;flex-wrap:wrap;gap:10px}label{font-size:12px;color:#475569;display:grid;gap:4px}input,select{font:inherit;padding:8px;border:1px solid #cbd5e1;border-radius:8px;min-width:0}button{font:inherit;font-weight:650;background:#2459bf;color:white;border:0;border-radius:9px;padding:10px 14px;cursor:pointer}button.secondary{background:#e7eef9;color:#1e3d70}button.green{background:#13824d}button:disabled{opacity:.5}.scroll{overflow:auto;max-height:68vh;border:1px solid #dce3ef;border-radius:10px}table{border-collapse:separate;border-spacing:0;white-space:nowrap;font-size:12px}th,td{border-right:1px solid #dfe6ef;border-bottom:1px solid #dfe6ef;text-align:center;min-width:39px;height:35px;padding:4px}thead th{position:sticky;top:0;z-index:3;background:#eaf0f9}th:first-child,td:first-child{position:sticky;left:0;z-index:2;background:white;min-width:160px;text-align:left}thead th:first-child{z-index:5;background:#eaf0f9}th:nth-child(2),td:nth-child(2){position:sticky;left:160px;z-index:2;background:white;min-width:83px}thead th:nth-child(2){z-index:5;background:#eaf0f9}th:nth-child(3),td:nth-child(3){position:sticky;left:243px;z-index:2;background:white;min-width:72px}thead th:nth-child(3){z-index:5;background:#eaf0f9}th:nth-child(4),td:nth-child(4){position:sticky;left:315px;z-index:2;background:white;min-width:126px}thead th:nth-child(4){z-index:5;background:#eaf0f9}.weekend{background:#fff1cf!important}.td{background:#dcfce7}.nd{background:#dce5ff}.u{background:#fee2e2}.off{background:#f1f5f9}.fixed{box-shadow:inset 0 0 0 2px #334155}.uncovered{background:#fff0e8;color:#a2351c;font-weight:700}.name{width:148px;font-size:12px}.hours{width:70px;font-size:12px}.small{font-size:12px;color:#64748b}.good{color:#067344}.bad{color:#b42318}.stat{display:inline-block;margin:5px 10px 5px 0;padding:7px 11px;border-radius:9px;background:#eff4fa}.legend{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}.tag{padding:4px 9px;border-radius:6px;font-size:12px}td select{font-size:11px;width:58px;padding:3px 0;border:0;background:transparent}#message{white-space:pre-wrap}.sub{font-size:12px;color:#5e6e83}#file{display:none}@media print{header,.bar,.noPrint{display:none!important}main{padding:0}.panel{border:0;padding:0}.scroll{max-height:none;overflow:visible}th,td{min-width:23px;padding:2px;font-size:9px}th:first-child,td:first-child{min-width:100px}th:nth-child(2),td:nth-child(2){min-width:45px;left:100px}th:nth-child(3),td:nth-child(3){min-width:45px;left:145px}}
 
-.edit{background:#fff7dc!important}.edited{box-shadow:inset 0 0 0 2px #a16207}.alert{color:#a22}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}td select{width:64px}.special-select{width:118px;font-size:12px;padding:5px;background:#f0f5ff;border:1px solid #b7c8e8} .stats-table td,.stats-table th{position:static;min-width:85px;text-align:left;padding:7px} .stats-table{white-space:normal}</style></head><body><header><h1>Dienstplan · Tabel inteligent 4.2 · Program special</h1><p>12 ore/tură · U = 8 ore · maximum 15 ture · Fixări manuale · Opțiune specială de 5 ture consecutive</p></header><main>
+.edit{background:#fff7dc!important}.edited{box-shadow:inset 0 0 0 2px #a16207}.alert{color:#a22}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}td select{width:64px}.special-select{width:118px;font-size:12px;padding:5px;background:#f0f5ff;border:1px solid #b7c8e8} .stats-table td,.stats-table th{position:static;min-width:85px;text-align:left;padding:7px} .stats-table{white-space:normal}</style></head><body><header><h1>Dienstplan · Tabel inteligent 4.3 · Generare tolerantă</h1><p>12 ore/tură · U = 8 ore · maximum 15 ture · Fixări manuale · Opțiune specială de 5 ture consecutive</p></header><main>
 <div class="bar"><label>Luna<select id="month"></select></label><label>An<input type="number" id="year" value="2026" style="width:90px"></label><button class="secondary" id="changeMonth">Schimbă luna</button><button class="secondary" id="add">+ Angajat</button><button class="secondary" id="example">Exemplu iulie</button><button class="green" id="generate">Generează</button></div>
 <div class="panel"><strong>Plan lunar — poți modifica manual și după generare</strong><p class="sub">Introdu numele și norma lunară (implicit 173 h). U scade 8 h din normă. În coloana „Regim” poți alege pentru fiecare angajat programul normal sau unul dintre cele două cicluri speciale. Atinge orice celulă și alege TD, ND, U sau L. Modificarea nu șterge celelalte ture. Celulele introduse manual rămân blocate și la următoarea generare.</p><div class="legend"><span class="tag td">TD = 12 h</span><span class="tag nd">ND = 12 h</span><span class="tag u">U = 8 h concediu</span><span class="tag off">L = liber obligatoriu</span><span class="tag uncovered">! = neacoperit</span></div><div class="scroll" id="table"></div></div>
 <div class="bar noPrint"><button id="save">Salvează proiect JSON</button><button class="secondary" id="load">Deschide proiect JSON</button><input type="file" id="file" accept=".json,application/json"><button class="secondary" id="csv">Export CSV</button><button class="secondary" id="print">Tipărește / PDF</button><button class="secondary" id="clear">Șterge doar planul generat</button></div>
@@ -112,6 +112,53 @@ function candidate(){
  const score=covered*300 - worst*2700 - imbalance*1900 - over*15;
  return {a,score,covered,worst,imbalance,over};
 }
+// Fallback tolerant: keeps all manual choices and fills any independently valid blocks.
+// A manual conflict is reported, never silently altered.
+function partialCandidate(){
+ const n=nDays(), a=m.people.map(p=>Object.fromEntries(Object.entries(p.locks||{}).filter(([d,v])=>+d>=1&&+d<=n&&(v==='TD'||v==='ND'))));
+ const initialErrors=validate(a), initial=new Set(initialErrors);
+ let occ=Array.from({length:n+1},()=>({TD:false,ND:false}));
+ for(let i=0;i<a.length;i++)for(const [day,v] of Object.entries(a[i]))occ[+day][v]=true;
+ const items=[];
+ for(let d=1;d<=n;d++)for(const shift of ['TD','ND'])if(!occ[d][shift])items.push({d,shift});
+ // Prefer difficult days, then rotate random ties between attempts.
+ items.sort((x,y)=>((weekend(y.d)?1:0)-(weekend(x.d)?1:0))||Math.random()-.5);
+ for(let pass=0;pass<3;pass++){
+  for(const {d,shift} of items){
+   if(occ[d][shift])continue;
+   let opts=[];
+   for(let i=0;i<m.people.length;i++){
+    let p=m.people[i], days=[d], allowed=(!p.locks[d]||p.locks[d]===shift)&&!a[i][d];
+    if(!allowed)continue;
+    if(weekend(d)){
+     let other=dow(d)===6?d+1:d-1;
+     if(other>=1&&other<=n){
+      if(a[i][other]&&a[i][other]!==shift)continue;
+      if(!a[i][other]){
+       if(p.locks[other]&&p.locks[other]!==shift)continue;
+       if(occ[other][shift])continue;
+       days.push(other);
+      }
+     }
+    }
+    if(Object.keys(a[i]).length+days.length>MAX)continue;
+    const test=a.map(row=>({...row}));for(const day of days)test[i][day]=shift;
+    const errs=validate(test);
+    // Never introduce any new violation; existing manual conflicts remain visible.
+    if(errs.some(e=>!initial.has(e)))continue;
+    const target=hours(p),worked=Object.keys(a[i]).length*SHIFT;
+    const before=Math.abs(worked-target),after=Math.abs(worked+days.length*SHIFT-target);
+    const over=Math.max(0,worked+days.length*SHIFT-target);
+    opts.push({i,days,score:(before-after)*8-over*6+Math.random()*8});
+   }
+   opts.sort((x,y)=>y.score-x.score);
+   if(opts.length){const o=opts[0];for(const day of o.days){a[o.i][day]=shift;occ[day][shift]=true}}
+  }
+ }
+ let covered=0;for(let d=1;d<=n;d++)for(const sh of ['TD','ND'])if(occ[d][sh])covered++;
+ let deviation=m.people.reduce((sum,p,i)=>sum+Math.abs(Object.keys(a[i]).length*SHIFT-hours(p)),0);
+ return {a,covered,score:covered*1000-deviation,errors:validate(a)};
+}
 function generate(){
  // Migrate manual selections from older saved projects into immutable locks.
  for(let i=0;i<m.people.length;i++){const p=m.people[i];p.locks??={};for(const [day,isManual] of Object.entries(m.manual?.[i]||{})){if(!isManual)continue;const current=p.locks[day]||m.plan?.[i]?.[day]||'';if(current)p.locks[day]=current;else delete p.locks[day]}}
@@ -126,10 +173,14 @@ function generate(){
   if(c&&(!best||c.score>best.score))best=c;
   if(performance.now()-start>6500)break;
  }
- if(!best){m.plan=old;m.manual=oldManual;setMsg('Nu am găsit o variantă validă. Planul existent a fost păstrat. Verifică restricțiile și încearcă din nou.');return}
+ if(!best){
+   // The strict search can fail when manual blocks are incomplete. Still fill safe slots.
+   for(let j=0;j<22;j++){let c=partialCandidate();if(!best||c.score>best.score)best=c}
+ }
+ if(!best){m.plan=old;m.manual=oldManual;setMsg('Nu s-a putut construi planul. Turele fixate au fost păstrate.');return}
  m.plan=best.a;render();summarize();
  const dif=m.people.map((p,i)=>`${p.name}: ${Object.keys(m.plan[i]).length*12 + (p.base-hours(p)) - p.base} h`).join(' | ');
- setMsg(`Plan cu distribuție echilibrată: ${best.covered}/${2*nDays()} ture acoperite; ${2*nDays()-best.covered} neacoperite. Încercări: ${tries}. Diferențe față de normă (inclusiv U): ${dif}. Depășirile sunt penalizate și se folosesc numai când îmbunătățesc soluția găsită. Rezultat euristic, nu optim matematic garantat. Verifică trecerea dintre luni.`,true);
+ setMsg(`${best.errors?.length?'ATENȚIE: conflicte în turele manuale: '+best.errors.join('; ')+'\n':' '}Plan cu distribuție echilibrată: ${best.covered}/${2*nDays()} ture acoperite; ${2*nDays()-best.covered} neacoperite. Încercări: ${tries}. Diferențe față de normă (inclusiv U): ${dif}. Depășirile sunt penalizate și se folosesc numai când îmbunătățesc soluția găsită. Rezultat euristic, nu optim matematic garantat. Verifică trecerea dintre luni.`,!best.errors?.length);
 }
 function dl(text,name,type){let b=new Blob([text],{type}),url=URL.createObjectURL(b),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 $('generate').onclick=generate;$('add').onclick=()=>{let id=Math.max(0,...m.people.map(p=>p.id))+1;m.people.push({id,name:'Angajat '+id,base:173,locks:{}});if(m.plan)m.plan.push({});render();summarize()};
