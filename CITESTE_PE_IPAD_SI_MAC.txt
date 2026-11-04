@@ -1,0 +1,1 @@
+Dienstplan Offline 4.9: F = frei in loc de L. Proiectele JSON mai vechi cu L sunt convertite automat in F la import. Salveaza proiectul JSON inainte de actualizare. Pentru GitHub inlocuieste index.html; daca folosesti offline actualizeaza si sw.js, manifest.webmanifest si icon.png.
