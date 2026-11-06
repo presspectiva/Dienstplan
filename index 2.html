@@ -1,0 +1,330 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dienstplan Online 5.2</title><meta name="theme-color" content="#172b50"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Dienstplan"><style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17243c;background:#f2f5fa}*{box-sizing:border-box}body{margin:0}header{background:#172b50;color:white;padding:20px 4vw}header h1{margin:0;font-size:24px}header p{margin:5px 0;color:#c9d8ee}main{padding:15px;max-width:none;margin:auto}.bar,.panel{background:white;border:1px solid #dbe3ef;border-radius:14px;padding:14px;margin:12px 0}.bar{display:flex;align-items:end;flex-wrap:wrap;gap:10px}label{font-size:12px;color:#475569;display:grid;gap:4px}input,select{font:inherit;padding:8px;border:1px solid #cbd5e1;border-radius:8px;min-width:0}button{font:inherit;font-weight:650;background:#2459bf;color:white;border:0;border-radius:9px;padding:10px 14px;cursor:pointer}button.secondary{background:#e7eef9;color:#1e3d70}button.green{background:#13824d}button:disabled{opacity:.5}.scroll{overflow:auto;max-height:none;border:1px solid #dce3ef;border-radius:10px}table{border-collapse:separate;border-spacing:0;white-space:nowrap;font-size:12px}th,td{border-right:1px solid #dfe6ef;border-bottom:1px solid #dfe6ef;text-align:center;min-width:39px;height:35px;padding:4px}thead th{position:sticky;top:0;z-index:3;background:#eaf0f9}th:first-child,td:first-child{position:sticky;left:0;z-index:2;background:white;min-width:160px;text-align:left}thead th:first-child{z-index:5;background:#eaf0f9}th:nth-child(2),td:nth-child(2){position:sticky;left:160px;z-index:2;background:white;min-width:83px}thead th:nth-child(2){z-index:5;background:#eaf0f9}th:nth-child(3),td:nth-child(3){position:sticky;left:243px;z-index:2;background:white;min-width:72px}thead th:nth-child(3){z-index:5;background:#eaf0f9}th:nth-child(4),td:nth-child(4){position:sticky;left:315px;z-index:2;background:white;min-width:126px}thead th:nth-child(4){z-index:5;background:#eaf0f9}.weekend{background:#fff1cf!important}.td{background:#dcfce7}.nd{background:#dce5ff}.ea{background:#e9dcff}.u{background:#fee2e2}.off{background:#f1f5f9}.fixed{box-shadow:inset 0 0 0 2px #334155}.uncovered{background:#fff0e8;color:#a2351c;font-weight:700}.name{width:148px;font-size:12px}.hours{width:70px;font-size:12px}.small{font-size:12px;color:#64748b}.good{color:#067344}.bad{color:#b42318}.stat{display:inline-block;margin:5px 10px 5px 0;padding:7px 11px;border-radius:9px;background:#eff4fa}.legend{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}.tag{padding:4px 9px;border-radius:6px;font-size:12px}td select{font-size:11px;width:58px;padding:3px 0;border:0;background:transparent}#message{white-space:pre-wrap}.sub{font-size:12px;color:#5e6e83}#file{display:none}@media print{header,.bar,.noPrint{display:none!important}main{padding:0}.panel{border:0;padding:0}.scroll{max-height:none;overflow:visible}th,td{min-width:23px;padding:2px;font-size:9px}th:first-child,td:first-child{min-width:100px}th:nth-child(2),td:nth-child(2){min-width:45px;left:100px}th:nth-child(3),td:nth-child(3){min-width:45px;left:145px}}
+
+.edit{background:#fff7dc!important}.edited{box-shadow:inset 0 0 0 2px #a16207}.alert{color:#a22}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}td select{width:64px}.special-select{width:118px;font-size:12px;padding:5px;background:#f0f5ff;border:1px solid #b7c8e8} .stats-table td,.stats-table th{position:static;min-width:85px;text-align:left;padding:7px} .stats-table{white-space:normal}
+#printArea{display:none}
+@media print{
+@page{size:A3 landscape;margin:8mm}
+html,body{background:white!important;color:#111!important;margin:0!important}
+header,main>.bar,main>.panel,#table,#stats,#message{display:none!important}
+main{padding:0!important;max-width:none!important}
+#printArea{display:block!important}
+.print-page{break-after:auto;page-break-after:auto;width:100%;font-family:Arial,sans-serif}
+.print-page:last-child{break-after:auto;page-break-after:auto}
+.print-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 5mm}
+.print-head h2{font-size:13pt;margin:0;color:#172b50}
+.print-head span{font-size:8pt}
+.print-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:5.4pt;white-space:normal}
+.print-table th,.print-table td{position:static!important;border:1px solid #aab6c5!important;padding:1px!important;height:6.5mm!important;min-width:0!important;text-align:center!important;background:white}
+.print-table th{background:#e9eff8!important;font-weight:bold}
+.print-table .pn{width:27mm;text-align:left!important;overflow-wrap:anywhere}
+.print-table .ph{width:12mm}
+.print-table .pw{background:#fff0c8!important}
+.print-table .ptd{background:#d8f4e2!important}
+.print-table .pnd{background:#dce8ff!important}.print-table .pea{background:#eadbff!important}
+.print-table .pu{background:#fce0e0!important}
+.print-table .pl{background:#eef0f4!important}
+.print-foot{font-size:7pt;margin-top:3mm;color:#475569}
+}
+</style></head><body><header><h1>Dienstplan · Dienstplanung 5.1 · Online</h1><p>TD/ND = 12 h · EA = 6 h · U = 8 h · maximal 15 Dienste · Manuelle Vorgaben · Individuelle ND-Ausnahme: ND → F → TD</p></header><main>
+<div class="bar"><label>Monat<select id="month"></select></label><label>An<input type="number" id="year" value="2026" style="width:90px"></label><button class="secondary" id="changeMonth">Monat wechseln</button><button class="secondary" id="add">+ Mitarbeiter</button><button class="secondary" id="example">Juli-Beispiel</button><button class="green" id="generate">Dienstplan erstellen</button></div>
+<div class="panel"><strong>Monatsdienstplan – auch nach der Erstellung manuell bearbeitbar</strong><p class="sub">Namen und monatliche Sollstunden eingeben (Standard: 173 Std.). Jeder Urlaubstag (U) zählt 8 Std. Mit „Keine neuen Dienste“ werden für diese Person keine weiteren Dienste erzeugt. EA = Einarbeitung (6 Std.) und ersetzt keinen TD. Unter „Modell“ kann das kombinierte Sondermodell gewählt werden. Die individuelle ND-Ausnahme erlaubt ND → 1 freier Tag → TD. Manuell eingetragene TD, ND, EA, U und F bleiben bei der nächsten Erstellung erhalten.</p><div class="legend"><span class="tag td">TD = 12 h</span><span class="tag ea">EA = 6 h (Einarbeitung)</span><span class="tag nd">ND = 12 h</span><span class="tag u">U = 8 Std. Urlaub</span><span class="tag off">F = Frei (verbindlich)</span><span class="tag uncovered">! = unbesetzt</span></div><div class="scroll" id="table"></div></div>
+<div class="bar noPrint"><button id="save">Projekt als JSON speichern</button><button class="secondary" id="load">JSON-Projekt öffnen</button><input type="file" id="file" accept=".json,application/json"><button class="secondary" id="csv">CSV exportieren</button><button class="secondary" id="excel">Excel speichern (.xlsx)</button><button class="secondary" id="print">Drucken / PDF</button><button class="secondary" id="clear">Nur erzeugte Dienste löschen</button></div>
+<div class="panel"><strong>Stunden und Prüfung</strong><div id="stats"></div><p id="message" class="small">Daten eingeben und „Dienstplan erstellen“ wählen.</p></div>
+<div class="panel"><strong>Regeln</strong><p class="small">Maximal 15 TD/ND-Dienste pro Person. EA = 6 Std., ersetzt keinen TD; U = 8 Std. Urlaub. Sollstundenlmodell: maximal 4 aufeinanderfolgende Arbeitstage. Kombiniertes Sondermodell: TD–TD–TD–ND–ND oder TD–TD–ND–ND–ND, danach 2 freie Tage. Nach dem letzten ND mindestens 2 freie Tage (individuelle Ausnahme: ND → 1 freier Tag → TD). Maximal 2 vollständige Wochenenden; Samstag und Sonntag müssen denselben Dienst haben (TD/TD oder ND/ND). Nicht besetzte Dienste bleiben sichtbar. Der Generator ist heuristisch und garantiert keine optimale Lösung. Monatsübergänge bitte prüfen.</p></div>
+<div id="printArea" aria-hidden="true"></div><div class="panel noPrint" style="font-size:13px"><strong>Speicherung:</strong> Daten werden lokal auf diesem Gerät gespeichert. Regelmäßig eine JSON-Sicherung herunterladen. Die Online-Version wird über GitHub Pages aufgerufen; es erfolgt keine automatische Synchronisierung zwischen Geräten.</div></main><script>const $=id=>document.getElementById(id);
+const months=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],week=['So','Mo','Di','Mi','Do','Fr','Sa'];
+let m={year:2026,month:11,people:Array.from({length:6},(_,i)=>({id:i+1,name:'Mitarbeiter '+(i+1),base:173,locks:{}})),plan:null,manual:{}};
+const SHIFT=12,UH=8,MAX=15;
+const specialPatterns={special3:['TD','TD','TD','ND','ND'],special2:['TD','TD','ND','ND','ND']};
+function isSpecial(p){return ['special3','special2','combined'].includes(p.regime)}
+function allowedSpecial(p){return isSpecial(p)?Object.values(specialPatterns):[]}
+const patterns=[['TD'],['ND'],['TD','TD','ND'],['TD','ND','ND'],['TD','TD','ND','ND'],['TD','TD'],['ND','ND']];
+function nDays(){return new Date(m.year,m.month,0).getDate()}
+function dow(d){return new Date(m.year,m.month-1,d).getDay()}
+function weekend(d){return dow(d)===0||dow(d)===6}
+function wkey(d){return dow(d)===6?d:dow(d)===0?d-1:null}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function hours(p){return Math.max(0,(+p.base||0)-Object.values(p.locks).filter(v=>v==='U').length*UH)}
+function migrateF(obj){if(!obj||!Array.isArray(obj.people))return obj;for(const p of obj.people){for(const d in (p.locks||{}))if(p.locks[d]==='L')p.locks[d]='F'}for(const row of (obj.plan||[])){for(const d in row)if(row[d]==='L')row[d]='F'}return obj}
+function shiftAt(i,d){const lk=m.people[i].locks?.[d];return lk==='U'||lk==='F'?lk:(m.plan?.[i]?.[d]||lk||'')}
+function eaCount(i){let n=0;for(let d=1;d<=nDays();d++)if(shiftAt(i,d)==='EA')n++;return n}
+function workHours(i){return count(i)*SHIFT+eaCount(i)*6}
+function count(i){let n=0;for(let d=1;d<=nDays();d++)if(['TD','ND'].includes(shiftAt(i,d)))n++;return n}
+function snapshot(){return m.people.map((p,i)=>Object.fromEntries(Array.from({length:nDays()},(_,j)=>[j+1,shiftAt(i,j+1)]).filter(([,v])=>v==='TD'||v==='ND'||v==='EA')))}
+function limitHours(p){return Math.max(0,Number(p.base)||0)-Object.values(p.locks||{}).filter(v=>v==='U').length*UH+SHIFT}
+
+function setMsg(msg,ok=false){$('message').className=ok?'good':'bad';$('message').textContent=msg}
+function render(){try{if(window.__readyToSave)localStorage.setItem("dienstplan_offline_v46",JSON.stringify(m))}catch(e){};let n=nDays(),h='<table><thead><tr><th>Mitarbeiter</th><th>Soll Std.</th><th>Plan Std.</th><th>Modell</th><th>Keine neuen Dienste</th><th>ND-Ausnahme</th>';
+for(let d=1;d<=n;d++)h+=`<th class="${weekend(d)?'weekend':''}">${d}<br>${week[dow(d)]}</th>`;
+h+='</tr></thead><tbody>';
+m.people.forEach((p,i)=>{h+=`<tr><td><input class="name" data-i="${i}" data-field="name" value="${esc(p.name)}"></td><td><input class="hours" type="number" min="0" data-i="${i}" data-field="base" value="${p.base}"></td><td>${workHours(i)+Object.values(p.locks||{}).filter(v=>v==='U').length*UH}</td><td><select class="special-select" data-regime="${i}"><option value="normal" ${(p.regime||"normal")==="normal"?"selected":""}>Sollstundenl</option><option value="combined" ${p.regime!=="normal"&&p.regime!=null?"selected":""}>Kombiniertes Sondermodell</option></select></td><td><label style="display:flex;align-items:center;gap:4px;justify-content:center;white-space:nowrap"><input type="checkbox" data-no-new="${i}" ${p.noNew?"checked":""}> Gesperrt</label></td><td><label style="display:flex;align-items:center;gap:4px;justify-content:center;white-space:nowrap"><input type="checkbox" data-short-rest="${i}" ${p.shortRest?"checked":""}> 1 Tag → TD</label></td>`;
+for(let d=1;d<=n;d++){let lock=p.locks[d]||'',v=shiftAt(i,d),edit=!!m.manual?.[i]?.[d];let shown=lock==='U'?'U':lock==='F'?'F':v||'·';let cls=shown==='U'?'u':shown==='F'?'off':shown==='TD'?'td':shown==='ND'?'nd':shown==='EA'?'ea':'';
+h+=`<td class="${cls} ${weekend(d)?'weekend':''} ${edit?'edited':''}"><select data-i="${i}" data-d="${d}" aria-label="${esc(p.name)} Tag ${d}"><option value="" ${shown==='·'?'selected':''}>·</option><option value="TD" ${shown==='TD'?'selected':''}>TD</option><option value="ND" ${shown==='ND'?'selected':''}>ND</option><option value="EA" ${shown==='EA'?'selected':''}>EA (6 h)</option><option value="U" ${shown==='U'?'selected':''}>U</option><option value="F" ${shown==='F'?'selected':''}>F</option></select></td>`}h+='</tr>'});
+for(let shift of ['TD','ND']){h+=`<tr><td><b>${shift} necesar</b></td><td></td><td></td><td></td><td></td><td></td>`;for(let d=1;d<=n;d++){let c=m.people.filter((p,i)=>shiftAt(i,d)===shift).length;h+=`<td class="${c===1?(shift==='TD'?'td':'nd'):'uncovered'}">${c===1?'✓':c===0?'!':'!!'}</td>`}h+='</tr>'}h+='</tbody></table>';$('table').innerHTML=h;
+$('table').querySelectorAll('input').forEach(el=>el.onchange=()=>{let p=m.people[+el.dataset.i];if(el.dataset.field==='name')p.name=el.value;else p.base=Math.max(0,+el.value||0);render();summarize()});
+$('table').querySelectorAll('input[data-no-new]').forEach(el=>el.onchange=()=>{(()=>{const i=+el.dataset.noNew,p=m.people[i];if(el.checked){for(let d=1;d<=nDays();d++){const v=shiftAt(i,d);if(['TD','ND','EA'].includes(v))p.locks[d]=v}}p.noNew=el.checked})();render();summarize();setMsg(el.checked?'Mitarbeiter gesperrt: keine neuen Dienste. Manuelle Einträge bleiben erhalten.':'Mitarbeiter entsperrt: der Generator kann wieder Dienste zuweisen.',true)});
+$('table').querySelectorAll('input[data-short-rest]').forEach(el=>el.onchange=()=>{m.people[+el.dataset.shortRest].shortRest=el.checked;render();summarize();setMsg(el.checked?'Individuelle Ausnahme aktiviert: ND → 1 freier Tag → TD.':'Ausnahme deaktiviert: nach ND gelten 2 freie Tage.',true)});
+$('table').querySelectorAll('select[data-regime]').forEach(el=>el.onchange=()=>{m.people[+el.dataset.regime].regime=el.value;render();summarize();setMsg('Sondermodell gespeichert. Mit „Dienstplan erstellen“ anwenden.',true)});
+$('table').querySelectorAll('select[data-d]').forEach(el=>el.onchange=()=>{let i=+el.dataset.i,d=+el.dataset.d,v=el.value,p=m.people[i];if(v==='U'||v==='F'){p.locks[d]=v;if(m.plan)m.plan[i][d]=''}else{if(v==='TD'||v==='ND'||v==='EA')p.locks[d]=v;else delete p.locks[d];if(m.plan)m.plan[i][d]=v;else if(v){m.plan=m.people.map(()=>({}));m.plan[i][d]=v}}m.manual[i]??={};m.manual[i][d]=true;render();summarize();let errs=validate(snapshot());setMsg(errs.length?'Änderung gespeichert. Achtung, es gibt Konflikte:\n'+errs.join('\n'):'Modificarea a fost păstrată. Regelnle verificate sunt respectate.',!errs.length)});
+}
+function validate(plan){if(!plan)return[];let errors=[],n=nDays();for(let d=1;d<=n;d++)for(let s of ['TD','ND'])if(plan.filter(a=>a[d]===s).length>1)errors.push(`Tag ${d}: zwei Personen für ${s}`);
+for(let d=1;d<=n;d++)if(plan.filter(a=>a[d]==='EA').length>1)errors.push(`Tag ${d}: mehr als eine Person für EA`);
+m.people.forEach((p,i)=>{let a=plan[i]||{},total=Object.values(a).filter(v=>v==='TD'||v==='ND').length;if(total>MAX)errors.push(`${p.name}: ${total} Dienste, maximal ${MAX}`);if(total*SHIFT+Object.values(a).filter(v=>v==='EA').length*6>limitHours(p)+1e-7)errors.push(`${p.name}: ${total*SHIFT+Object.values(a).filter(v=>v==='EA').length*6} ore lucrate depășesc norma ajustată cu über 12 h (limită ${limitHours(p)} h)`);let weekends=new Set(),run=[],runStart=0;const special=isSpecial(p);
+function close(){if(!run.length)return;let str=run.join(','),allow=(patterns.some(x=>x.join(',')===str)&&(!['TD,TD','ND,ND'].includes(str)||(dow(runStart)===6&&runStart+1<=nDays())||(runStart===1&&str==='ND,ND')))||(allowedSpecial(p).some(x=>x.join(',')===str));if(!allow)errors.push(`${p.name}: unzulässiger Dienstblock ${run.join(' ')} (Tag ${runStart})`);run=[]}
+for(let d=1;d<=n;d++){let v=a[d]||'',lk=p.locks[d]||'';if((lk==='TD'||lk==='ND'||lk==='EA')&&v!==lk)errors.push(`${p.name}: fest eingetragener Dienst ${lk} am Tag ${d} wird nicht eingehalten`);if((lk==='U'||lk==='F')&&v)errors.push(`${p.name}: tură an einem gesperrten Tag ${d}`);if(v==='EA'){close();if(a[d-1]==='ND')errors.push(`${p.name}: EA imediat nach ND (Tag ${d})`);if(d>2&&a[d-2]==='ND'&&!p.shortRest)errors.push(`${p.name}: EA vor Ablauf von 2 freien Tagen nach ND (Tag ${d})`);let w=wkey(d);if(w!==null)weekends.add(w)}else if(v){if(!run.length)runStart=d;run.push(v);if(run.length>(special?5:4))errors.push(`${p.name}: über ${special?5:4} aufeinanderfolgende Tage`);let w=wkey(d);if(w!==null)weekends.add(w)}else close();if(v==='ND'&&a[d+1]!=='ND'){if(a[d+1])errors.push(`${p.name}: nach ND ${d} ist mindestens ein freier Tag erforderlich`);if(d+2<=n&&a[d+2]&&!(p.shortRest&&a[d+2]==='TD'&&!a[d+1]))errors.push(`${p.name}: nach ND ${d} 2 freie Tage fehlen (die Ausnahme erlaubt nur TD nach einem freien Tag)`)}if(dow(d)===6&&d<n){if(Boolean(a[d])!==Boolean(a[d+1]))errors.push(`${p.name}: getrenntes Wochenende ${d}-${d+1}`);else if(a[d]&&a[d+1]&&a[d]!==a[d+1])errors.push(`${p.name}: Wochenende mit unterschiedlichen Diensten ${d}-${d+1} (${a[d]} / ${a[d+1]})`)}}close();if(weekends.size>2)errors.push(`${p.name}: ${weekends.size} Wochenenden (maxim 2)`)});return [...new Set(errors)]}
+function summarize(){let h='<div class="scroll"><table class="stats-table"><thead><tr><th>Mitarbeiter</th><th>Modell</th><th>Soll</th><th>U</th><th>Zu arbeiten</th><th>TD+ND</th><th>EA</th><th>Arbeitsstunden</th><th>Abweichung</th></tr></thead><tbody>';
+m.people.forEach((p,i)=>{let u=Object.values(p.locks).filter(v=>v==='U').length,worked=workHours(i),required=hours(p);h+=`<tr><td>${esc(p.name)}</td><td>${isSpecial(p)?'Kombiniertes Sondermodell':'Sollstundenl'}</td><td>${p.base} h</td><td>${u} × 8 = ${u*UH} h</td><td>${required} h</td><td>${count(i)} / 15</td><td>${eaCount(i)} × 6 h</td><td>${worked} h</td><td style="color:${Math.abs(required-worked)>24?'#b42318':'#067344'}">${worked-required>0?'+':''}${worked-required} h</td></tr>`});h+='</tbody></table></div>';$('stats').innerHTML=h}
+function candidate(){
+ const n=nDays(),a=m.people.map(p=>Object.fromEntries(Object.entries(p.locks||{}).filter(([d,v])=>v==='EA'))),occ=Array.from({length:n+1},()=>({TD:false,ND:false}));
+ // Randomized ordering: first the people with low availability / mandatory shifts,
+ // then rotate the rest so no employee permanently gets first pick.
+ const order=m.people.map((p,i)=>({i,required:Object.values(p.locks).filter(v=>v==='TD'||v==='ND').length,
+   available:n-Object.values(p.locks).filter(v=>v==='U'||v==='F').length,
+   random:Math.random()}));
+ order.sort((x,y)=>y.required-x.required || (x.available-y.available)*0.035 || x.random-y.random);
+ for(const {i} of order){
+  const p=m.people[i],locks=p.locks,target=hours(p)/SHIFT,special=allowedSpecial(p);
+  if(p.noNew){let fixed=Object.fromEntries(Object.entries(locks).filter(([d,v])=>v==='TD'||v==='ND'||v==='EA'));a[i]=fixed;for(const [d,v] of Object.entries(fixed))if(v==='TD'||v==='ND')occ[+d][v]=true;continue}
+  const eaHours=Object.values(locks).filter(v=>v==='EA').length*6;const max=Math.min(MAX,Math.max(0,Math.floor((limitHours(p)-eaHours+1e-7)/SHIFT)));
+  const dp=Array.from({length:n+5},()=>[]);
+  dp[1]=[{seq:{},cnt:0,score:0,wks:[]}];
+  for(let d=1;d<=n;d++){
+   const states=dp[d].sort((x,y)=>y.score-x.score).slice(0,105);
+   for(const st of states){
+    if(!['TD','ND'].includes(locks[d]))dp[d+1].push(st);
+    for(const b of (special.length?[...patterns,...special]:patterns)){
+     const end=d+b.length-1;if(end>n||st.cnt+b.length>max)continue;
+     // TD-TD and ND-ND only allowed as the complete weekend pair,
+     // except ND-ND at the beginning of a month (continuation unknown).
+     if(b.length===2&&b[0]===b[1]&&!(dow(d)===6&&d+1<=n)&&!(d===1&&b[0]==='ND'))continue;
+     let ok=true,wks=new Set(st.wks);
+     for(let j=0;j<b.length;j++){
+      const day=d+j,s=b[j],lk=locks[day]||'';
+      if(lk==='U'||lk==='F'||lk==='EA'||(lk==='TD'||lk==='ND')&&lk!==s||occ[day][s]){ok=false;break}
+      let w=wkey(day);if(w!==null)wks.add(w);
+     }
+     if(!ok||wks.size>2)continue;
+     for(let day=d;day<=end;day++){
+      if(dow(day)===6&&day<n){if(!(day+1>=d&&day+1<=end)||b[day-d]!==b[day+1-d])ok=false}
+      if(dow(day)===0&&day>1){if(!(day-1>=d&&day-1<=end)||b[day-d]!==b[day-1-d])ok=false}
+     }
+     if(!ok)continue;
+     const after=end+(b.at(-1)==='ND'?(p.shortRest?2:3):2);
+     for(let day=end+1;day<Math.min(after,n+1);day++)if(['TD','ND'].includes(locks[day]))ok=false;
+     if(!ok)continue;
+     let seq={...st.seq};b.forEach((shift,j)=>seq[d+j]=shift);
+     // The final evaluation strongly prioritizes balance; in the DP we keep
+     // a broad beam of alternative counts and positions.
+     let projected=st.cnt+b.length;
+     let score=st.score+125*b.length-35*Math.max(0,projected-Math.floor(target))
+       +Math.random()*35;
+     dp[Math.min(n+1,after)].push({seq,cnt:projected,score,wks:[...wks]});
+    }
+   }
+  }
+  const finals=dp[n+1].filter(st=>Object.entries(locks).every(([d,v])=>!['TD','ND'].includes(v)||st.seq[+d]===v));
+  if(!finals.length)return null;
+  // Prefer target, not maximum possible shifts. Allow 180h for 173h
+  // only if there is no better global allocation.
+  finals.sort((x,y)=>{
+   const ax=Math.abs(x.cnt*SHIFT-hours(p)),ay=Math.abs(y.cnt*SHIFT-hours(p));
+   return ax-ay || y.score-x.score;
+  });
+  const pick=finals[Math.floor(Math.random()*Math.min(5,finals.length))];
+  a[i]=pick.seq;for(const [d,shift] of Object.entries(pick.seq))occ[+d][shift]=true;
+ }
+ if(validate(a).length)return null;
+ let covered=0,deficits=[],over=0;
+ for(let d=1;d<=n;d++)for(const shift of ['TD','ND'])if(occ[d][shift])covered++;
+ m.people.forEach((p,i)=>{
+  const target=hours(p),worked=Object.values(a[i]).filter(v=>v==='TD'||v==='ND').length*SHIFT+Object.values(a[i]).filter(v=>v==='EA').length*6;
+  deficits.push(Math.max(0,target-worked)/Math.max(12,target));
+  over+=Math.max(0,worked-target);
+ });
+ // First keep as many shifts covered as possible, but a very uneven plan
+ // is more costly than a modest number of uncovered slots.
+ const avg=deficits.reduce((a,b)=>a+b,0)/Math.max(1,deficits.length);
+ const worst=Math.max(0,...deficits);
+ const imbalance=deficits.reduce((a,b)=>a+(b-avg)**2,0);
+ const score=covered*300 - worst*2700 - imbalance*1900 - over*15;
+ return {a,score,covered,worst,imbalance,over};
+}
+// Fallback tolerant: keeps all manual choices and fills any independently valid blocks.
+// A manual conflict is reported, never silently altered.
+function partialCandidate(){
+ const n=nDays(), a=m.people.map(p=>Object.fromEntries(Object.entries(p.locks||{}).filter(([d,v])=>+d>=1&&+d<=n&&['TD','ND','EA'].includes(v))));
+ const initialErrors=validate(a), initial=new Set(initialErrors);
+ let occ=Array.from({length:n+1},()=>({TD:false,ND:false}));
+ for(let i=0;i<a.length;i++)for(const [day,v] of Object.entries(a[i]))if(v==='TD'||v==='ND')occ[+day][v]=true;
+ const items=[];
+ for(let d=1;d<=n;d++)for(const shift of ['TD','ND'])if(!occ[d][shift])items.push({d,shift});
+ // Prefer difficult days, then rotate random ties between attempts.
+ items.sort((x,y)=>((weekend(y.d)?1:0)-(weekend(x.d)?1:0))||Math.random()-.5);
+ for(let pass=0;pass<3;pass++){
+  for(const {d,shift} of items){
+   if(occ[d][shift])continue;
+   let opts=[];
+   for(let i=0;i<m.people.length;i++){
+    let p=m.people[i], days=[d], allowed=(!p.locks[d]||p.locks[d]===shift)&&!a[i][d];
+    if(!allowed||p.noNew)continue;
+    if(weekend(d)){
+     let other=dow(d)===6?d+1:d-1;
+     if(other>=1&&other<=n){
+      if(a[i][other]&&a[i][other]!==shift)continue;
+      if(!a[i][other]){
+       if(p.locks[other]&&p.locks[other]!==shift)continue;
+       if(occ[other][shift])continue;
+       days.push(other);
+      }
+     }
+    }
+    if(Object.values(a[i]).filter(v=>v==='TD'||v==='ND').length+days.length>MAX|| (Object.values(a[i]).filter(v=>v==='TD'||v==='ND').length+days.length)*SHIFT+Object.values(a[i]).filter(v=>v==='EA').length*6>limitHours(p)+1e-7)continue;
+    const test=a.map(row=>({...row}));for(const day of days)test[i][day]=shift;
+    const errs=validate(test);
+    // Never introduce any new violation; existing manual conflicts remain visible.
+    if(errs.some(e=>!initial.has(e)))continue;
+    const target=hours(p),worked=Object.values(a[i]).filter(v=>v==='TD'||v==='ND').length*SHIFT+Object.values(a[i]).filter(v=>v==='EA').length*6;
+    const before=Math.abs(worked-target),after=Math.abs(worked+days.length*SHIFT-target);
+    const over=Math.max(0,worked+days.length*SHIFT-target);
+    opts.push({i,days,score:(before-after)*8-over*6+Math.random()*8});
+   }
+   opts.sort((x,y)=>y.score-x.score);
+   if(opts.length){const o=opts[0];for(const day of o.days){a[o.i][day]=shift;occ[day][shift]=true}}
+  }
+ }
+ let covered=0;for(let d=1;d<=n;d++)for(const sh of ['TD','ND'])if(occ[d][sh])covered++;
+ let deviation=m.people.reduce((sum,p,i)=>sum+Math.abs((Object.values(a[i]).filter(v=>v==='TD'||v==='ND').length*SHIFT+Object.values(a[i]).filter(v=>v==='EA').length*6)-hours(p)),0);
+ return {a,covered,score:covered*1000-deviation,errors:validate(a)};
+}
+function generate(){
+ // Migrate manual selections from older saved projects into immutable locks.
+ for(let i=0;i<m.people.length;i++){const p=m.people[i];p.locks??={};for(const [day,isManual] of Object.entries(m.manual?.[i]||{})){if(!isManual)continue;const current=p.locks[day]||m.plan?.[i]?.[day]||'';if(current)p.locks[day]=current;else delete p.locks[day]}}
+ const existingErrors=validate(snapshot()).filter(x=>x.includes('zwei Personen')||x.includes('Dienst an gesperrtem Tag'));if(existingErrors.length){setMsg('Bitte Konflikte in festen Einträgen vor der Neuerstellung beheben:\n'+existingErrors.join('\n'));return}
+ let fixed=[];for(let d=1;d<=nDays();d++)for(let shift of ['TD','ND'])
+  if(m.people.filter(p=>p.locks[d]===shift).length>1)fixed.push(`${shift} Tag ${d}: ture fixe contradictorii`);
+ if(fixed.length){setMsg(fixed.join('\n'));return}
+ const old=m.plan,oldManual=m.manual;
+ let best=null,start=performance.now(),tries=0;
+ for(let k=0;k<240;k++){
+  const c=candidate();tries++;
+  if(c&&(!best||c.score>best.score))best=c;
+  if(performance.now()-start>6500)break;
+ }
+ // Also try filling around fixed choices. Compare using the same score scale.
+ for(let j=0;j<28;j++){let c=partialCandidate();if(!best||c.covered>best.covered||(c.covered===best.covered&&c.score>best.score))best=c}
+
+ if(!best){m.plan=old;m.manual=oldManual;setMsg('Es konnte kein Dienstplan erstellt werden. Feste Einträge bleiben erhalten.');return}
+ m.plan=best.a;render();summarize();
+ const dif=m.people.map((p,i)=>`${p.name}: ${workHours(i) - hours(p)} h`).join(' | ');
+ setMsg(`${best.errors?.length?'ACHTUNG: Konflikte in manuellen Diensten: '+best.errors.join('; ')+'\n':' '}Dienstplan mit möglichst ausgewogener Verteilung: ${best.covered}/${2*nDays()} Dienste besetzt; ${2*nDays()-best.covered} unbesetzt. Versuche: ${tries}. Abweichungen von Sollstunden (einschließlich U): ${dif}. Eine Überschreitung der Sollstunden ist auf 12 Std. begrenzt und wird nachrangig behandelt. Heuristisches Ergebnis ohne Optimalitätsgarantie. Monatswechsel bitte prüfen.`,!best.errors?.length);
+}
+function dl(text,name,type){let b=new Blob([text],{type}),url=URL.createObjectURL(b),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+$('generate').onclick=generate;$('add').onclick=()=>{let id=Math.max(0,...m.people.map(p=>p.id))+1;m.people.push({id,name:'Mitarbeiter '+id,base:173,locks:{}});if(m.plan)m.plan.push({});render();summarize()};
+$('month').onchange=()=>{m.year=+$('year').value;m.month=+$('month').value;m.plan=null;m.manual={};render();summarize()};$('changeMonth').onclick=()=>{m.year=+$('year').value;m.month=+$('month').value;m.plan=null;m.manual={};render();summarize()};
+$('clear').onclick=()=>{m.plan=m.people.map((p)=>Object.fromEntries(Object.entries(p.locks).filter(([d,v])=>v==='TD'||v==='ND'||v==='EA')));render();summarize();setMsg('Nur automatisch erzeugte Dienste wurden gelöscht. Manuelle Vorgaben bleiben erhalten.',true)};
+$('save').onclick=()=>dl(JSON.stringify(m,null,2),`dienstplan_${m.year}_${m.month}.json`,'application/json');$('load').onclick=()=>$('file').click();
+$('file').onchange=async e=>{try{let obj=JSON.parse(await e.target.files[0].text());if(!Array.isArray(obj.people)||!obj.year||!obj.month)throw Error('format invalid');m=migrateF(obj);m.manual??={};m.people.forEach(p=>{p.base??=173;p.locks??={};p.regime=isSpecial(p)?'combined':'normal';p.shortRest??=false;p.noNew??=false});sync();render();summarize();setMsg('Proiect geladen.',true)}catch(err){alert('Eroare: '+err.message)}};
+$('csv').onclick=()=>{let rows=[['Mitarbeiter','Modell','ND-Ausnahme','Keine neuen Dienste','Sollstunden','Urlaubsstunden','Ore de lucrat','Arbeitsstunden',...Array.from({length:nDays()},(_,i)=>i+1)]];m.people.forEach((p,i)=>rows.push([p.name,p.regime||'normal',p.shortRest?'Da':'Nu',p.noNew?'Da':'Nu',p.base,Object.values(p.locks).filter(v=>v==='U').length*8,hours(p),workHours(i),...Array.from({length:nDays()},(_,j)=>p.locks[j+1]==='U'?'U':p.locks[j+1]==='F'?'F':shiftAt(i,j+1))]));dl('\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n'),'dienstplan.csv','text/csv;charset=utf-8')};
+
+
+// Standalone XLSX export, no external library or internet required.
+function excelXML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]))}
+function xcol(n){let x='';while(n){n--;x=String.fromCharCode(65+n%26)+x;n=Math.floor(n/26)}return x}
+function zipStore(files){
+ const enc=new TextEncoder(),parts=[],central=[];let offset=0;
+ const crcTable=Array.from({length:256},(_,n)=>{for(let k=0;k<8;k++)n=(n&1)?0xedb88320^(n>>>1):n>>>1;return n>>>0});
+ const crc=b=>{let c=0xffffffff;for(const x of b)c=crcTable[(c^x)&255]^(c>>>8);return(c^0xffffffff)>>>0};
+ const u16=(v)=>[v&255,(v>>>8)&255],u32=v=>[v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255];
+ for(const [name,data] of files){
+  const nb=enc.encode(name),b=enc.encode(data),c=crc(b);
+  const local=new Uint8Array([80,75,3,4,...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(c),...u32(b.length),...u32(b.length),...u16(nb.length),...u16(0)]);
+  parts.push(local,nb,b);
+  central.push(new Uint8Array([80,75,1,2,...u16(20),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(c),...u32(b.length),...u32(b.length),...u16(nb.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset)]),nb);
+  offset+=local.length+nb.length+b.length;
+ }
+ const centralLen=central.reduce((n,a)=>n+a.length,0);
+ const end=new Uint8Array([80,75,5,6,...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(centralLen),...u32(offset),...u16(0)]);
+ return new Blob([...parts,...central,end],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+function exportExcel(){
+ const n=nDays(),hdr=['Mitarbeiter','Modell','Soll Std.','Urlaubsstunden','TD+ND-Stunden','Gesamtstunden','Abweichung Std.',...Array.from({length:n},(_,j)=>j+1)];
+ const rows=[hdr,...m.people.map((p,i)=>{
+  const u=Object.values(p.locks||{}).filter(v=>v==='U').length;
+  return [p.name,isSpecial(p)?'Kombiniertes Sondermodell':'Sollstundenl',Number(p.base)||0,u*8,workHours(i),workHours(i)+u*8,workHours(i)+u*8-(Number(p.base)||0),...Array.from({length:n},(_,j)=>shiftAt(i,j+1))];
+ })];
+ rows.push(['TD Besetzung','','','','','','',...Array.from({length:n},(_,j)=>m.people.filter((p,i)=>shiftAt(i,j+1)==='TD').length)]);
+ rows.push(['ND Besetzung','','','','','','',...Array.from({length:n},(_,j)=>m.people.filter((p,i)=>shiftAt(i,j+1)==='ND').length)]);
+ const cell=(v,c,r)=>{
+  if(typeof v==='number'&&Number.isFinite(v))return `<c r="${xcol(c)}${r}"><v>${v}</v></c>`;
+  return `<c r="${xcol(c)}${r}" t="inlineStr"><is><t>${excelXML(v)}</t></is></c>`;
+ };
+ const body=rows.map((row,ri)=>`<row r="${ri+1}">${row.map((v,ci)=>cell(v,ci+1,ri+1)).join('')}</row>`).join('');
+ const xml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane xSplit="1" ySplit="1" topLeftCell="B2" activePane="bottomRight" state="frozen"/></sheetView></sheetViews><cols><col min="1" max="2" width="22" customWidth="1"/><col min="3" max="7" width="13" customWidth="1"/><col min="8" max="${7+n}" width="6" customWidth="1"/></cols><sheetData>${body}</sheetData></worksheet>`;
+ const files=[
+ ['[Content_Types].xml','<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>'],
+ ['_rels/.rels','<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+ ['xl/workbook.xml',`<?xml version="1.0" encoding="UTF-8"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="${excelXML(months[m.month-1]+' '+m.year)}" sheetId="1" r:id="rId1"/></sheets></workbook>`],
+ ['xl/_rels/workbook.xml.rels','<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/></Relationships>'],
+ ['xl/worksheets/sheet1.xml',xml]
+ ];
+ const url=URL.createObjectURL(zipStore(files)),a=document.createElement('a');a.href=url;a.download=`Dienstplan_${m.year}_${String(m.month).padStart(2,'0')}.xlsx`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);
+ setMsg('Excel-Datei erstellt – auch für vollständig manuell erstellte Pläne.',true);
+}
+$('excel').onclick=exportExcel;
+
+function buildPrint(){
+ const n=nDays(), name=months[m.month-1]+' '+m.year;
+ let pages='';
+ for(let start=1;start<=n;start+=n){
+  const end=n;
+  let h=`<section class="print-page"><div class="print-head"><h2>DIENSTPLAN — ${name}</h2><span>Tage ${start}–${end} / ${n} · TD/ND 12 h · EA 6 h · U 8 h</span></div><table class="print-table"><thead><tr><th class="pn">Mitarbeiter</th><th class="ph">Soll</th><th class="ph">Plan+U</th>`;
+  for(let d=start;d<=end;d++)h+=`<th class="${weekend(d)?'pw':''}">${d}<div>${week[dow(d)]}</div></th>`;
+  h+='</tr></thead><tbody>';
+  m.people.forEach((p,i)=>{
+   const u=Object.values(p.locks||{}).filter(v=>v==='U').length;
+   h+=`<tr><td class="pn">${esc(p.name)}</td><td>${p.base}</td><td>${workHours(i)+u*8}</td>`;
+   for(let d=start;d<=end;d++){
+    let v=p.locks[d]==='U'?'U':p.locks[d]==='F'?'F':shiftAt(i,d);
+    let cls=v==='TD'?'ptd':v==='ND'?'pnd':v==='EA'?'pea':v==='U'?'pu':v==='F'?'pl':weekend(d)?'pw':'';
+    h+=`<td class="${cls}">${v}</td>`;
+   }
+   h+='</tr>';
+  });
+  for(const sh of ['TD','ND']){
+   h+=`<tr><td class="pn">${sh} Besetzung</td><td></td><td></td>`;
+   for(let d=start;d<=end;d++){
+    const countSh=m.people.filter((p,i)=>shiftAt(i,d)===sh).length;
+    h+=`<td class="${countSh===1?(sh==='TD'?'ptd':'pnd'):''}">${countSh===1?'✓':countSh===0?'—':'!!'}</td>`;
+   }
+   h+='</tr>';
+  }
+  h+='</tbody></table><div class="print-foot">Als Tabelle gedruckt, kein Screenshot. Dienstregeln und Monatsübergänge bitte prüfen.</div></section>';
+  pages+=h;
+ }
+ $('printArea').innerHTML=pages;
+}
+$('print').onclick=()=>{buildPrint();window.print()};
+window.addEventListener('beforeprint',buildPrint);
+
+$('example').onclick=()=>{m={year:2026,month:7,people:Array.from({length:6},(_,i)=>({id:i+1,name:'Mitarbeiter '+(i+1),base:173,locks:{}})),plan:null,manual:{}};let p=m.people;p[1].locks[1]='ND';p[1].locks[2]='ND';for(let d=6;d<=17;d++)p[2].locks[d]='U';for(let d=1;d<=5;d++)p[3].locks[d]='U';for(let d=18;d<=30;d++)p[3].locks[d]='U';for(let d=23;d<=26;d++)p[4].locks[d]='F';for(let d=1;d<=31;d++)if(d!==15&&d!==16)p[5].locks[d]='F';sync();render();summarize();setMsg('Juli-Beispiel geladen. Soll: 173 Std. pro Person, U = 8 Std.')};
+function sync(){$('month').value=m.month;$('year').value=m.year}
+months.forEach((name,i)=>$('month').add(new Option(name,i+1)));
+try{let saved=localStorage.getItem('dienstplan_offline_v46');if(saved){let obj=JSON.parse(saved);if(obj&&Array.isArray(obj.people)&&obj.year&&obj.month){m=migrateF(obj);m.manual??={};m.people.forEach(p=>{p.base??=173;p.locks??={};p.regime=isSpecial(p)?'combined':'normal';p.shortRest??=false;p.noNew??=false})}}}catch(e){}
+migrateF(m);window.__readyToSave=true;sync();render();summarize();
+// Online version: disable legacy offline cache so GitHub updates are visible.
+if('serviceWorker' in navigator){
+ navigator.serviceWorker.getRegistrations().then(async regs=>{
+  const old=regs.filter(r=>r.scope.includes('/Dienstplan/'));
+  if(old.length){
+   await Promise.all(old.map(r=>r.unregister()));
+   if(navigator.serviceWorker.controller && !sessionStorage.getItem('dienstplan_online_reloaded')){
+    sessionStorage.setItem('dienstplan_online_reloaded','1');
+    location.reload();
+   }
+  }
+ }).catch(()=>{});
+}
+window.addEventListener('pagehide',()=>{try{localStorage.setItem('dienstplan_offline_v46',JSON.stringify(m))}catch(e){}});
+
+</script></body></html>
